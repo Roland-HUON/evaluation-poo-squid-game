@@ -1,10 +1,14 @@
 <?php
+    require_once 'Characters.php';//inclus le fichier Heros.php car on nous appris que chaque class était un fichier en entreprise
+    // je l'inclus ici car seul les scripts Ennemis.php & Heros.php en ont besoin
+    require_once 'utils.php'; // besoin de certaines fonctions aléatoires comme pour la triche...
+    // de plus, j'en ai absolument besoin pour que le reste marche donc requiere et include
     class Heros extends characters{
         public function loss(){
 
         }
         public function gain(){
-
+            $this->marbles = $marbles + $ennemisMarbles;
         }
         public function cheat(){
 

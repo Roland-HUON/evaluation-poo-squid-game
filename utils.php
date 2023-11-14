@@ -1,21 +1,14 @@
 <?php
-    class utils{
-        public $random;
-        public function randomChoose(){
-            $random = rand(0,1);
+    class random{
+        private static $random;
+
+        public function __construct($min, $max){
+            self::$random;
         }
-        // public function __construct(){
-        //     $this->random = $random;
-        // }
-        // public function getRandom(){
-        //     return $this->random;
-        // }
-        // public function setRandom($random){
-        //     $this->random = $random;
-        // }
-        // public function randomChoose(){
-        //     $this->random = rand(0,1);
-        // }
+
+        public static function getCount($min, $max){
+            return self::$random  = rand($min,$max);
+        }
     }
-    echo randomChoose();
+    echo getCount(1,2);
 ?>
