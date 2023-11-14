@@ -1,14 +1,7 @@
 <?php
-    class random{
-        private static $random;
-
-        public function __construct($min, $max){
-            self::$random;
-        }
-
-        public static function getCount($min, $max){
-            return self::$random  = rand($min,$max);
+    class utils{
+        public static function random($min, $max){
+            return rand($min, $max);
         }
     }
-    echo getCount(1,2);
 ?>

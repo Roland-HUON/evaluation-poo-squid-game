@@ -1,7 +1,6 @@
 <?php
     require_once 'Heros.php'; //inclus le fichier Heros.php car on nous appris que chaque class était un fichier en entreprise
     require_once 'Ennemis.php'; //inclus le fichier Ennemis.php car on nous appris que chaque class était un fichier en entreprise
-    require_once 'utils.php';//inclus le fichier utils.php car on nous appris que chaque class était un fichier en entreprise
     // de plus, j'en ai absolument besoin pour que le reste marche donc requiere et include
     class game{
         
@@ -20,19 +19,7 @@
         $playerNumber++;
     }
     echo $listPlayer;
-    $nomEnnemis = array(
-        "Victor", "Steve", "Louis", "Silvain", "Luc",
-        "Antoine", "Marc", "Julius", "Henry", "Franck",
-        "Bruno", "Jeremy", "Pierre", "Antoine", "Léo",
-        "Kleine", "Larry","Jean","Jack","Julius", 
-    );
-    $marblesEnnemi = rand(1,20);
-    $ageEnnemi = rand(18, 100);
-    foreach($nomEnnemis as $ennemis){
-        $ennemis = new Ennemis($ennemis, $marblesEnnemi, $ageEnnemi);
-        $listEnnemis = array($ennemis);
-    }
-    $lenghtListEnnemis = count($listEnnemis);
+    
     if ($randomLevel == 0){
         echo "Le niveau de difficulté est le niveau facile.";
         echo "<br>";

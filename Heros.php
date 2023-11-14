@@ -5,7 +5,7 @@
     // de plus, j'en ai absolument besoin pour que le reste marche donc requiere et include
     class Heros extends characters{
         public function loss(){
-
+            return getMarbles() - getMarbles();
         }
         public function gain(){
             $this->marbles = $marbles + $ennemisMarbles;
