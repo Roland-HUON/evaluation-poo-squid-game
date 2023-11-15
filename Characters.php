@@ -19,7 +19,7 @@
         public function setMarbles($marbles){
             $this->marbles = $marbles;
         }
-        abstract public function loss($ennemisMarbles, $malus);
-        abstract public function gain($ennemisMarbles, $gain);
+        abstract public function loss($name, $marbles, $ennemisMarbles, $malus);
+        abstract public function gain($name, $marbles, $ennemisMarbles, $gain);
     }
 ?>

@@ -13,7 +13,7 @@
             parent::__construct($name, $marbles); // récupère le constructor du parent donc celui de characters.php
             $this->malus = $malus;
             $this->gain = $gain;
-            $this->$screem_war = $screem_war;
+            $this->screem_war = $screem_war;
         }
         public function getMalus(){
             return $this->malus;
@@ -33,25 +33,31 @@
         public function setScreemWar($screem_war){
             $this->screem_war = $screem_war;
         }
-        public function loss($ennemisMarbles, $malus){
-            return getMarbles() - ($ennemisMarbles + $malus);
+        public function loss($name, $marbles, $ennemisMarbles, $malus){
+            $this->marbles - ($ennemisMarbles + $malus);
             echo "Le joueur ".$name." a perdu " . $ennemisMarbles + $malus . " billes.";
         }
-        public function gain($ennemisMarbles, $gain){
-            $this->marbles = $marbles + $ennemisMarbles + $gain;
+        public function gain($name, $marbles, $ennemisMarbles, $gain){
+            $this->marbles + $ennemisMarbles + $gain;
             echo "Le joueur ".$name." a gagné " . $ennemisMarbles+$gain . " billes.";
         }
         public function cheat(){
             gain();
             array_splice($listEnnemis,$ennemis);
         }
-        public function choose($ennemisMarbles){ // fonction du pair ou impair en public parce qu'on veut savoir le choix du joueur
+        public function choose($name, $marbles, $ennemisMarbles, $gain, $malus){ // fonction du pair ou impair en public parce qu'on veut savoir le choix du joueur
             $random = utils::random(0,1);
             $compare = $this->compareMarbles($ennemisMarbles);
+            echo $compare;
+            if($random==1){
+                echo "Impair !";
+            } else{
+                echo "Pair !";
+            }
             if ($random == $compare){
-                gain();
+                return $this->gain($name, $marbles, $ennemisMarbles, $gain);
             } else {
-                loss();
+                return $this->loss($name, $marbles, $ennemisMarbles, $malus);
             }
         }
         private function compareMarbles($ennemisMarbles){ // fonction privée car les autres n'ont pas à savoir ça (intérieur de la télécommande)

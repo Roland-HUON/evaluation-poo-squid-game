@@ -15,11 +15,11 @@
         public function setAge($age){
             $this->age = $age;
         }
-        public function loss($ennemisMarbles, $malus){
+        public function loss($name, $marbles, $ennemisMarbles, $malus){
             echo $marbles();
             return getMarbles() - getMarbles();
         }
-        public function gain($ennemisMarbles, $gain){
+        public function gain($name, $marbles, $ennemisMarbles, $gain){
             return getMarbles();
         }
         public function random($min, $max){
