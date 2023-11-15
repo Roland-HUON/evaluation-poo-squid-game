@@ -7,19 +7,6 @@
     }
     $randomLevel = rand(0,2);
     $level = 0;
-    echo $randomLevel;
-    $nomPersonnage =array("Seong Gi-hun", "Kang Sae-byeok", "Cho Sang-woo");
-    $marblesStart= array(15,25,35);
-    $malusPersonnage=array(2,1,0);
-    $bonusPersonnage=array(1,2,3);
-    $playerNumber = 0;
-    foreach ($nomPersonnage as $player){
-        $player.$playerNumber = new Heros($nomPersonnage[$playerNumber],$marblesStart[$playerNumber], $malusPersonnage[$playerNumber], $bonusPersonnage[$playerNumber]);
-        $listPlayer = array($player.$playerNumber);
-        $playerNumber++;
-    }
-    echo $listPlayer;
-    
     if ($randomLevel == 0){
         echo "Le niveau de difficulté est le niveau facile.";
         echo "<br>";
