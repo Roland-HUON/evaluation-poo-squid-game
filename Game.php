@@ -2,7 +2,11 @@
     require_once 'Heros.php'; //inclus le fichier Heros.php car on nous appris que chaque class était un fichier en entreprise
     require_once 'Ennemis.php'; //inclus le fichier Ennemis.php car on nous appris que chaque class était un fichier en entreprise
     // de plus, j'en ai absolument besoin pour que le reste marche donc requiere et include
+    class game{
+        public function match(){
 
+        }
+    }
     // Création des ennemis
     // noms des ennemis dans un array
     $nomEnnemis = array(
@@ -72,6 +76,9 @@
     // $marblesPlayer = $hero->getMarbles();
     // sert à monter de niveau
     $level = 0;
+    //nombre de match à disputer dépendant du niveau de difficulté
+    $match = array(5, 10, 20);
+    $matchChoose = $match[$randomLevel];
     // sert à l'option relancé
     $life = 0;
     // sert à donner le nombre de billes au départ
@@ -82,8 +89,8 @@
     if ($randomLevel == 0){
         echo "Le niveau de difficulté est le niveau facile.";
         echo "<br>";
-        //boucle de 5 rencontres
-        while ($level<5){// niveau facile
+        //boucle de matchs
+        while ($level<$matchChoose){// niveau facile
             $level++;// incrémente pour sortir de la boule while, représente le niveau actuel où se trouve le joueur
             echo " Niveau : " . $level;
             echo "<br>";
@@ -120,22 +127,31 @@
             // lorsque le joueur n'a plus de billes
             if($hero->setMarbles($hero->getWinner()) < 0){
                 echo"Vous avez été tué !";
-                // possibilité de recommencer si n'a pas déjà recommencer
+                // possibilité de rejouer , si pas déjà fais
                 if($life == 0){
                     $life++;
-                    // variable qui stocke la chance de relancer
+                    // possibilité de rejouer dans une variable
                     $secondLife = utils::random(0,1);
                     // echo $secondLife;
                 if($secondLife == 1){
+                    // si oui recommencer depuis le début
                     $level = 1;
                     $start = 0;
                     echo "Vous avez été réssuciter ! <br>";
-                } 
+                } else {
+                    // si pas relancer
+                    // sortir de la boucle while
+                    break;
+                }
+            } else {
+                // si déjà rejouer
+                // sortir de la boucle while 
+                break;
             }
                 }
             echo "Le level " . $level ." est fini.";
             echo "<br>";
-            if($level > 4){
+            if($level > $matchChoose-1){
                 $hero->victory($hero->getName(), $hero->getScreemWar());
             }
         }
@@ -187,7 +203,11 @@
                     $level = 1;
                     $start = 0;
                     echo "Vous avez été réssuciter ! <br>";
-                } 
+                } else {
+                    break;
+                }
+            } else {
+                break;
             }
                 }
             echo "Le level " . $level ." est fini.";
