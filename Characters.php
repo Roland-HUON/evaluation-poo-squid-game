@@ -18,13 +18,9 @@
         public function getMarbles(){
             return $this->marbles;
         }
-        //setter name
-        public function setName($name){
-            $this->name = $name;
-        }
         //setter marbles
-        public function setMarbles($marbles){
-            $this->marbles = $marbles;
+        public function setMarbles($marblesCompa){
+            return $this->marbles = $this->marbles + $marblesCompa;
         }
         // abstract car loss() et gain() ne sont pas les mêmes pour les deux
         // a eux de les définir dans chacun de leur classe
