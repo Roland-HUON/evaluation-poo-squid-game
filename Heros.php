@@ -31,6 +31,9 @@
         public function getScreemWar(){
             return $this->screem_war;
         }
+        public function setScreemWar($screem_war){
+            $this->screem_war = $screem_war;
+        }
         // fonction loss
         // fais un echo des billes que le joueur perd
         public function loss($name, $marbles, $ennemisMarbles, $malus){
@@ -103,8 +106,7 @@
         // fonction public, on veut avoir un cri de guerre si on gagne
         // et un message pour dire que notre joueur a remporté le grand prix !
         public function victory($name, $victory){ 
-            return $victory;
-            echo "Le joueur " . $name . " a remporté 45,6 milliards de Won sud-coréen !";
+            echo $victory . "<br>Le joueur " . $name . " a remporté 45,6 milliards de Won sud-coréen !";
         }
     }
 ?>

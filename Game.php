@@ -104,16 +104,21 @@
                     echo "Je triche !<br>";
                     //fonction cheat exécuter
                     echo $hero->cheat($listEnnemis, $randomEnnemis, $hero->getName(), $hero->setMarbles($hero->getWinner()), $ennemi->getMarbles(), $hero->getGain());
+                    echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
                     echo "Le level " . $level ." est fini.<br>";
                     $randomEnnemis = utils::random(0,count($listEnnemis)-1);
                     $ennemi = $listEnnemis[$randomEnnemis];
+                    // si gagne après avoir triché
+                    if($level > 4){
+                        $hero->victory($hero->getName(), $hero->getScreemWar());
+                    }
                     continue;
                 }
             }
             echo "L'ennemi a " . $ennemi->getMarbles() . " marbles. <br>";
             echo $hero->choose($listEnnemis, $randomEnnemis, $hero->getName(), $hero->getMarbles(), $ennemi->getMarbles(), $hero->getGain(), $hero->getMalus());
             // lorsque le joueur n'a plus de billes
-            if($hero->getMarbles() < 0){
+            if($hero->setMarbles($hero->getWinner()) < 0){
                 echo"Vous avez été tué !";
                 // possibilité de recommencer si n'a pas déjà recommencer
                 if($life == 0){
@@ -159,16 +164,20 @@
                     echo "Je triche !<br>";
                     //fonction cheat exécuter
                     echo $hero->cheat($listEnnemis, $randomEnnemis, $hero->getName(), $hero->setMarbles($hero->getWinner()), $ennemi->getMarbles(), $hero->getGain());
+                    echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
                     echo "Le level " . $level ." est fini.<br>";
                     $randomEnnemis = utils::random(0,count($listEnnemis)-1);
                     $ennemi = $listEnnemis[$randomEnnemis];
+                    if($level > 9){
+                        return $hero->victory($hero->getName(), $hero->getScreemWar());
+                    }
                     continue;
                 }
             }
             echo "L'ennemi a " . $ennemi->getMarbles() . " marbles. <br>";
             // var_dump($ennemi);
             echo $hero->choose($listEnnemis, $randomEnnemis, $hero->getName(), $hero->getMarbles(), $ennemi->getMarbles(), $hero->getGain(), $hero->getMalus());
-            if($hero->getMarbles() < 0){
+            if($hero->setMarbles($hero->getWinner()) < 0){
                 echo"Vous avez été tué !";
                 if($life == 0){
                     $life++;
@@ -184,7 +193,7 @@
             echo "Le level " . $level ." est fini.";
             echo "<br>";
             if($level > 9){
-                $hero->victory($hero->getName(), $hero->getScreemWar());
+                return $hero->victory($hero->getName(), $hero->getScreemWar());
             }
         //niveau impossible
     }
@@ -212,16 +221,20 @@
                     echo "Je triche !<br>";
                     //fonction cheat exécuter
                     echo $hero->cheat($listEnnemis, $randomEnnemis, $hero->getName(), $hero->setMarbles($hero->getWinner()), $ennemi->getMarbles(), $hero->getGain());
+                    echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
                     echo "Le level " . $level ." est fini.<br>";
                     $randomEnnemis = utils::random(0,count($listEnnemis)-1);
                     $ennemi = $listEnnemis[$randomEnnemis];
+                    if($level > 19){
+                        $hero->victory($hero->getName(), $hero->getScreemWar());
+                    }
                     continue;
                 }
             }
             echo "L'ennemi a " . $ennemi->getMarbles() . " marbles. <br>";
             // var_dump($ennemi);
             echo $hero->choose($listEnnemis, $randomEnnemis, $hero->getName(), $hero->getMarbles(), $ennemi->getMarbles(), $hero->getGain(), $hero->getMalus());
-            if($hero->getMarbles() < 0){
+            if($hero->setMarbles($hero->getWinner()) < 0){
                 echo"Vous avez été tué !";
                 if($life == 0){
                     $life++;
