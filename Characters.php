@@ -19,8 +19,10 @@
             return $this->marbles;
         }
         //setter marbles
-        public function setMarbles($marblesCompa){
-            return $this->marbles = $this->marbles + $marblesCompa;
+        public function setMarbles($winner){
+            // problème en négatif ça fait des choses incohérentes et aléatoire...
+            // echo $winner;
+            return $this->marbles = $this->getMarbles() + $winner;
         }
         // abstract car loss() et gain() ne sont pas les mêmes pour les deux
         // a eux de les définir dans chacun de leur classe

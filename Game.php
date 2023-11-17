@@ -3,8 +3,81 @@
     require_once 'Ennemis.php'; //inclus le fichier Ennemis.php car on nous appris que chaque class était un fichier en entreprise
     // de plus, j'en ai absolument besoin pour que le reste marche donc requiere et include
     class game{
-        public function match(){
+        private $start;
+        private $marblesPlayer;
+        private $life;
+        private $match;
+        private $level;
+        private $hero;
+        private $ennemi;
 
+        public function match($start, $marblesPlayer, $life, $level, $match, $hero, $listEnnemis){
+            //boucle de matchs
+        while ($level<$match){// niveau facile
+            $level++;// incrémente pour sortir de la boule while, représente le niveau actuel où se trouve le joueur
+            echo "Niveau : " . $level . "<br>";
+            $randomEnnemis = utils::random(0,count($listEnnemis)-1);
+            $ennemi = $listEnnemis[$randomEnnemis];
+            if($start < 1){
+                $start++;
+                echo "Votre joueur possède " . $marblesPlayer . " marbles. <br>";
+            } else {
+                echo "Votre joueur possède " . $hero->GetMarbles($hero->getWinner()) . " marbles. <br>";
+            }
+            echo "Vous affrontez l'ennemi : " . $ennemi->getName() . ". Il a " . $ennemi->getAge() . " ans.<br>";
+            // possibilité de tricher
+            if($ennemi->getAge() >= 70){
+                //chance de 50/50 : décide de tricher ou non
+                $cheat = utils::random(0,1);
+                // si $cheat == 1 alors je triche, sinon jouer normalement
+                if($cheat == 1){
+                    echo "Je triche !<br>";
+                    //fonction cheat exécuter
+                    echo $hero->cheat($listEnnemis, $randomEnnemis, $hero->getName(), $hero->setMarbles($hero->getWinner()), $ennemi->getMarbles(), $hero->getGain());
+                    echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
+                    echo "Le level " . $level ." est fini.<br>";
+                    $randomEnnemis = utils::random(0,count($listEnnemis)-1);
+                    $ennemi = $listEnnemis[$randomEnnemis];
+                    // si gagne après avoir triché
+                    if($level > $match-1){
+                        $hero->victory($hero->getName(), $hero->getScreemWar());
+                    }
+                    continue;
+                }
+            }
+            echo "L'ennemi a " . $ennemi->getMarbles() . " marbles. <br>";
+            echo $hero->choose($listEnnemis, $randomEnnemis, $hero->getName(), $hero->setMarbles($hero->getWinner()), $ennemi->getMarbles(), $hero->getGain(), $hero->getMalus());
+            echo "Le level " . $level ." est fini.<br>";
+            // lorsque le joueur n'a plus de billes
+            if($hero->getMarbles() < 0){
+                echo"Vous avez été tué !";
+                // possibilité de rejouer , si pas déjà fais
+                if($life == 0){
+                    $life++;
+                    // possibilité de rejouer dans une variable
+                    $secondLife = utils::random(0,1);
+                    // echo $secondLife;
+                if($secondLife == 1){
+                    // si oui recommencer depuis le début
+                    $level = 0;
+                    $start = 0;
+                    echo "Vous avez été réssuciter ! <br>";
+                } else {
+                    // si pas relancer
+                    // sortir de la boucle while
+                    break;
+                }
+            } else {
+                // si déjà rejouer
+                // sortir de la boucle while 
+                break;
+            }
+                }
+                echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
+            if($level > $match-1){
+                $hero->victory($hero->getName(), $hero->getScreemWar());
+            }
+        }
         }
     }
     // Création des ennemis
@@ -55,7 +128,7 @@
     // création d'un array vide où je met mes héros
     $listHero = array();
     foreach($nomHero as $hero){
-        echo'<br>';
+        // echo'<br>';
         $hero = new Heros($nomHero[$h], $heroMarbles[$h],$heroMalus[$h], $heroGain[$h], $victory[$h]);
         array_push($listHero, $hero);
         $h++;
@@ -71,8 +144,7 @@
     // nom joueur
     echo "Vous incarnez le joueur " . $hero->getName() . ".";
     // nombre billes
-    echo "Votre joueur possède " . $hero->getMarbles() . " marbles";
-    echo "<br>";
+    echo "Votre joueur possède " . $hero->getMarbles() . " marbles. <br>";
     // $marblesPlayer = $hero->getMarbles();
     // sert à monter de niveau
     $level = 0;
@@ -87,194 +159,21 @@
     $marblesPlayer = $hero->getMarbles();
     // niveau facile
     if ($randomLevel == 0){
-        echo "Le niveau de difficulté est le niveau facile.";
-        echo "<br>";
-        //boucle de matchs
-        while ($level<$matchChoose){// niveau facile
-            $level++;// incrémente pour sortir de la boule while, représente le niveau actuel où se trouve le joueur
-            echo " Niveau : " . $level;
-            echo "<br>";
-            $randomEnnemis = utils::random(0,count($listEnnemis)-1);
-            $ennemi = $listEnnemis[$randomEnnemis];
-            if($start < 1){
-                $start++;
-                echo "Votre joueur possède " . $marblesPlayer . " marbles. <br>";
-            } else {
-                echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
-            }
-            echo "Vous affrontez l'ennemi : " . $ennemi->getName() . ". Il a " . $ennemi->getAge() . " ans.<br>";
-            if($ennemi->getAge() >= 70){
-                //chance de 50/50 : décide de tricher ou non
-                $cheat = utils::random(0,1);
-                // si $cheat == 1 alors je triche, sinon jouer normalement
-                if($cheat == 1){
-                    echo "Je triche !<br>";
-                    //fonction cheat exécuter
-                    echo $hero->cheat($listEnnemis, $randomEnnemis, $hero->getName(), $hero->setMarbles($hero->getWinner()), $ennemi->getMarbles(), $hero->getGain());
-                    echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
-                    echo "Le level " . $level ." est fini.<br>";
-                    $randomEnnemis = utils::random(0,count($listEnnemis)-1);
-                    $ennemi = $listEnnemis[$randomEnnemis];
-                    // si gagne après avoir triché
-                    if($level > 4){
-                        $hero->victory($hero->getName(), $hero->getScreemWar());
-                    }
-                    continue;
-                }
-            }
-            echo "L'ennemi a " . $ennemi->getMarbles() . " marbles. <br>";
-            echo $hero->choose($listEnnemis, $randomEnnemis, $hero->getName(), $hero->getMarbles(), $ennemi->getMarbles(), $hero->getGain(), $hero->getMalus());
-            // lorsque le joueur n'a plus de billes
-            if($hero->setMarbles($hero->getWinner()) < 0){
-                echo"Vous avez été tué !";
-                // possibilité de rejouer , si pas déjà fais
-                if($life == 0){
-                    $life++;
-                    // possibilité de rejouer dans une variable
-                    $secondLife = utils::random(0,1);
-                    // echo $secondLife;
-                if($secondLife == 1){
-                    // si oui recommencer depuis le début
-                    $level = 1;
-                    $start = 0;
-                    echo "Vous avez été réssuciter ! <br>";
-                } else {
-                    // si pas relancer
-                    // sortir de la boucle while
-                    break;
-                }
-            } else {
-                // si déjà rejouer
-                // sortir de la boucle while 
-                break;
-            }
-                }
-            echo "Le level " . $level ." est fini.";
-            echo "<br>";
-            if($level > $matchChoose-1){
-                $hero->victory($hero->getName(), $hero->getScreemWar());
-            }
-        }
+        echo "Le niveau de difficulté est le niveau facile. <br>";
+        // j'instancie la game avec toutes les caractéristiques suivantes
+        $rencontres = new game();
+        $rencontres->match($start, $marblesPlayer, $life, $level, $matchChoose, $hero, $listEnnemis);
         //niveau difficile
     } else if ( $randomLevel == 1){
-        echo "Le niveau de difficulté est le niveau difficile";
-        echo "<br>";
-        while ($level<10){// niveau facile
-            $level++;// incrémente pour sortir de la boule while, représente le niveau actuel où se trouve le joueur
-            echo " Niveau : " . $level;
-            echo "<br>";
-            $randomEnnemis = utils::random(0,count($listEnnemis)-1);
-            $ennemi = $listEnnemis[$randomEnnemis];
-            if($start < 1){
-                $start++;
-                echo "Votre joueur possède " . $marblesPlayer . " marbles. <br>";
-            } else {
-                echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
-            }
-            echo "Vous affrontez l'ennemi : " . $ennemi->getName() . ". Il a " . $ennemi->getAge() . " ans.<br>";
-            if($ennemi->getAge() >= 70){
-                //chance de 50/50 : décide de tricher ou non
-                $cheat = utils::random(0,1);
-                // si $cheat == 1 alors je triche, sinon jouer normalement
-                if($cheat == 1){
-                    echo "Je triche !<br>";
-                    //fonction cheat exécuter
-                    echo $hero->cheat($listEnnemis, $randomEnnemis, $hero->getName(), $hero->setMarbles($hero->getWinner()), $ennemi->getMarbles(), $hero->getGain());
-                    echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
-                    echo "Le level " . $level ." est fini.<br>";
-                    $randomEnnemis = utils::random(0,count($listEnnemis)-1);
-                    $ennemi = $listEnnemis[$randomEnnemis];
-                    if($level > 9){
-                        return $hero->victory($hero->getName(), $hero->getScreemWar());
-                    }
-                    continue;
-                }
-            }
-            echo "L'ennemi a " . $ennemi->getMarbles() . " marbles. <br>";
-            // var_dump($ennemi);
-            echo $hero->choose($listEnnemis, $randomEnnemis, $hero->getName(), $hero->getMarbles(), $ennemi->getMarbles(), $hero->getGain(), $hero->getMalus());
-            if($hero->setMarbles($hero->getWinner()) < 0){
-                echo"Vous avez été tué !";
-                if($life == 0){
-                    $life++;
-                    $secondLife = utils::random(0,1);
-                    // echo $secondLife;
-                if($secondLife == 1){
-                    $level = 1;
-                    $start = 0;
-                    echo "Vous avez été réssuciter ! <br>";
-                } else {
-                    break;
-                }
-            } else {
-                break;
-            }
-                }
-            echo "Le level " . $level ." est fini.";
-            echo "<br>";
-            if($level > 9){
-                return $hero->victory($hero->getName(), $hero->getScreemWar());
-            }
-        //niveau impossible
-    }
+        echo "Le niveau de difficulté est le niveau difficile. <br>";
+        // j'instancie la game avec toutes les caractéristiques suivantes
+        $rencontres = new game();
+        $rencontres->match($start, $marblesPlayer, $life, $level, $matchChoose, $hero, $listEnnemis);
+    //niveau impossible
 }else if ( $randomLevel == 2){
-        echo "Le niveau de difficulté est le niveau impossible";
-        echo "<br>";
-        while ($level<20){// niveau facile
-            $level++;// incrémente pour sortir de la boule while, représente le niveau actuel où se trouve le joueur
-            echo " Niveau : " . $level;
-            echo "<br>";
-            $randomEnnemis = utils::random(0,count($listEnnemis)-1);
-            $ennemi = $listEnnemis[$randomEnnemis];
-            if($start < 1){
-                $start++;
-                echo "Votre joueur possède " . $marblesPlayer . " marbles. <br>";
-            } else {
-                echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
-            }
-            echo "Vous affrontez l'ennemi : " . $ennemi->getName() . ". Il a " . $ennemi->getAge() . " ans.<br>";
-            if($ennemi->getAge() >= 70){
-                //chance de 50/50 : décide de tricher ou non
-                $cheat = utils::random(0,1);
-                // si $cheat == 1 alors je triche, sinon jouer normalement
-                if($cheat == 1){
-                    echo "Je triche !<br>";
-                    //fonction cheat exécuter
-                    echo $hero->cheat($listEnnemis, $randomEnnemis, $hero->getName(), $hero->setMarbles($hero->getWinner()), $ennemi->getMarbles(), $hero->getGain());
-                    echo "Votre joueur possède " . $hero->setMarbles($hero->getWinner()) . " marbles. <br>";
-                    echo "Le level " . $level ." est fini.<br>";
-                    $randomEnnemis = utils::random(0,count($listEnnemis)-1);
-                    $ennemi = $listEnnemis[$randomEnnemis];
-                    if($level > 19){
-                        $hero->victory($hero->getName(), $hero->getScreemWar());
-                    }
-                    continue;
-                }
-            }
-            echo "L'ennemi a " . $ennemi->getMarbles() . " marbles. <br>";
-            // var_dump($ennemi);
-            echo $hero->choose($listEnnemis, $randomEnnemis, $hero->getName(), $hero->getMarbles(), $ennemi->getMarbles(), $hero->getGain(), $hero->getMalus());
-            if($hero->setMarbles($hero->getWinner()) < 0){
-                echo"Vous avez été tué !";
-                if($life == 0){
-                    $life++;
-                    $secondLife = utils::random(0,1);
-                    // echo $secondLife;
-                if($secondLife == 1){
-                    $level = 1;
-                    $start = 0;
-                    echo "Vous avez été réssuciter ! <br>";
-                } else {
-                    break;
-                }
-            } else {
-                break;
-            }
-                }
-            echo "Le level " . $level ." est fini.";
-            echo "<br>";
-            if($level > 19){
-                $hero->victory($hero->getName(), $hero->getScreemWar());
-            }
-    }}
+        echo "Le niveau de difficulté est le niveau impossible. <br>";
+        // j'instancie la game avec toutes les caractéristiques suivantes
+        $rencontres = new game();
+        $rencontres->match($start, $marblesPlayer, $life, $level, $matchChoose, $hero, $listEnnemis);
+    }
 ?>

@@ -37,26 +37,38 @@
         // fonction loss
         // fais un echo des billes que le joueur perd
         public function loss($name, $marbles, $ennemisMarbles, $malus){
-            $this->marblesCompa = -($ennemisMarbles + $malus);
-            $lost = array("Le joueur ".$name." a perdu " . $this->marblesCompa . " billes. <br>", $this->marblesCompa);
-            return $lost;
+            // double $ennemisMarbles et Malus sans que je ne sache pourquoi
+            // $this->marblesCompa = -($ennemisMarbles + $malus);
+            // echo $this->marblesCompa;
+            // $lost = array(
+            //     "Le joueur ".$name." a perdu " . $this->marblesCompa . " billes. <br>", 
+            //     $this->marblesCompa
+            // );
+            // return $lost;
         }
         // fonction gain
         // fais un echo des billes que le joueur gagne
         public function gain($name, $marbles, $ennemisMarbles, $gain){
-            $this->marblesCompa = $ennemisMarbles+$gain;
-            $win = array("Le joueur ".$name." a gagné " . $this->marblesCompa . " billes.<br>", $this->marblesCompa);
-            return $win;
+            // // echo $ennemisMarbles;
+            // $this->marblesCompa = $ennemisMarbles+$gain;
+            // // echo $this->marblesCompa;
+            // $win = array(
+            //     "Le joueur ".$name." a gagné " . $this->marblesCompa . " billes.<br>", 
+            //     $this->marblesCompa
+            // );
+            // return $win;
         }
         // fonction cheat 
         // fonctionnera dans Game.php si et seulement si l'ennemi a 70 ans
         public function cheat($listEnnemis, $ennemis, $name, $marbles, $ennemisMarbles, $gain){
             // je gagne
-            $this->winner = $this->gain($name, $marbles, $ennemisMarbles, $gain)[1];
+            // $this->winner = $this->gain($name, $marbles, $ennemisMarbles, $gain)[1];
+            $this->winner = $ennemisMarbles + $gain;
             // echo $this->winner;
             //mon ennemi meurt/supprimer de l'array $listEnnemis
             array_splice($listEnnemis, $ennemis, 1);
-            return $this->gain($name, $marbles, $ennemisMarbles, $gain)[0];
+            echo "Le joueur ".$name." a gagné " . $this->winner . " billes.<br>";
+            // return $this->gain($name, $marbles, $ennemisMarbles, $gain)[0];
         }
         // retourne le nombre de billes gagner et/ou perdue
         public function getWinner(){
@@ -72,22 +84,30 @@
             $compare = $this->compareMarbles($ennemisMarbles);
             // si variable random = 1 alors le joueur choisit impair
             if($random==1){
-                echo " Vous aviez choisi de dire : Impair ! <br>";
+                echo " Vous avez choisi de dire : Impair ! <br>";
                 // sinon choisi pair
             } else {
-                echo " Vous aviez choisi de dire : Pair ! <br>";
+                echo " Vous avez choisi de dire : Pair ! <br>";
             }
             // vérification si choix du joueur correspond à la value de compare
             // si correspond
             if ($random == $compare){
-                $this->winner = $this->gain($name, $marbles, $ennemisMarbles, $gain)[1];
+                $this->winner = $ennemisMarbles + $gain;
+                // echo $this->winner;
+
+                // $this->winner = $this->gain($name, $marbles, $ennemisMarbles, $gain)[1];
                 // echo $this->winner;
                 array_splice($listEnnemis, $ennemis, 1);
-                return $this->gain($name, $marbles, $ennemisMarbles, $gain)[0];
+                // echo $this->gain($name, $marbles, $ennemisMarbles, $gain)[0];
+                echo "Le joueur ".$name." a gagné " . $this->winner . " billes.<br>";
                 // sinon le joueur perd des billes
             } else {
-                $this->winner = $this->loss($name, $marbles, $ennemisMarbles, $malus)[1];
-                return $this->loss($name, $marbles, $ennemisMarbles, $malus)[0];
+                $www = ($ennemisMarbles + $malus);
+                $this->winner = -$www;
+                // echo $this->winner;
+                // $this->winner = $this->loss($name, $marbles, $ennemisMarbles, $malus)[1];
+                // echo $this->loss($name, $marbles, $ennemisMarbles, $malus)[0];
+                echo "Le joueur ".$name." a perdu " . $this->winner . " billes.<br>";
             }
         }
         // fonction de comparaison des billes ennemis : pair = 0 | impair = 1
